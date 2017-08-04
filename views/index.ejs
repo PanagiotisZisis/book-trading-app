@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Hello World!</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bookTradingApp</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+  <link rel="stylesheet" href="/styles/styles.css" />
+
 </head>
 <body>
-  Hello World!
+
+  <nav>
+    <div class="nav-wrapper">
+      <div class="container">
+        <a href="#!" class="brand-logo">bookTradingApp</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Sign in</a></li>
+          <li><a href="#">Log in</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Sign in</a></li>
+          <li><a href="#">Log in</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero valign-wrapper center-align">
+    <div style="width: 100%;">
+      <a href="#" id="header"><h2><i class="medium material-icons">library_books</i> bookTradingApp</h2></a>
+      <h4>Trade your favorite books with your friends!</h4>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="container">
+    
+    </div>
+  </div>
+
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/index.js"></script>
+
 </body>
 </html>

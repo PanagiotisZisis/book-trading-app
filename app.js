@@ -15,6 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 const app = express();
@@ -46,6 +47,7 @@ app.use(session({
   saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
@@ -53,6 +55,4 @@ app.use(compression());
 app.use(cors());
 
 // routes
-require('./routes/index')(app);
-
-module.exports = app;
+require('./routes/index')(app, io);

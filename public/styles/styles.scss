@@ -1,0 +1,33 @@
+// material palette
+$primary-color-dark:   #303F9F;
+$primary-color:        #3F51B5;
+$primary-color-light:  #C5CAE9;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #448AFF;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+
+nav {
+  background-color: $primary-color-dark;
+  color: $primary-color-text;
+}
+
+.hero {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url('https://images.unsplash.com/photo-1477238134895-98438ad85c30?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=95e514e7369404c2b5e729e71c45a2ba');
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  max-width: 100%;
+  color: $primary-color-text;
+}
+
+#header {
+  color: $primary-color-text;
+}
+
+.features {
+  background-color: $primary-color-light;
+  height: 30vh;
+}
