@@ -28,6 +28,24 @@ nav {
 }
 
 .features {
-  background-color: $primary-color-light;
-  height: 30vh;
+  background-color: $primary-color-text;
+  height: 45vh;
+  color: $primary-text-color;
+  padding-top: 20px;
+}
+
+.dark-blue {
+  background-color: $primary-color-dark !important;
+}
+
+.light-blue {
+  background-color: $primary-color !important;
+}
+
+hr {
+  border-color: $divider-color;
+}
+
+.accent-blue {
+  background-color: $accent-color;
 }
