@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = (app, io) => {
+
   app.get('/', (req, res) => {
     
     /*io.on('connection', socket => {
@@ -12,7 +13,7 @@ module.exports = (app, io) => {
 
     });*/
 
-    req.flash('greeting', 'such wow');
-    res.render('index', { flash: req.flash('greeting') });
+    res.render('index');
   });
+  
 };

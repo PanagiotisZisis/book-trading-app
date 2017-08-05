@@ -3,61 +3,63 @@
 <head>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bookTradingApp | Home</title>
+  <title>bookTradingApp | Sign up</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
   <link rel="stylesheet" href="/styles/styles.css" />
 
 </head>
-<body>
+<body class="forms-body">
 
-  <nav>
-    <div class="nav-wrapper">
-      <div class="container">
-        <a href="/" class="brand-logo">bookTradingApp</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/signup">Sign up</a></li>
-          <li><a href="/login">Log in</a></li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/signup">Sign up</a></li>
-          <li><a href="/login">Log in</a></li>
-        </ul>
+  <main>
+    <nav>
+      <div class="nav-wrapper">
+        <div class="container">
+          <a href="/" class="brand-logo">bookTradingApp</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/signup">Sign up</a></li>
+            <li><a href="/login">Log in</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/signup">Sign up</a></li>
+            <li><a href="/login">Log in</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="hero valign-wrapper center-align">
-    <div style="width: 100%;">
-      <h2><i class="medium material-icons">library_books</i> bookTradingApp</h2>
-      <h4>Trade your favorite books!</h4>
-    </div>
-  </div>
-
-  <div class="features">
-    <h3 class="center-align">Start Trading!</h3>
-    <br />
-    <br />
     <div class="container">
-      <div class="row center-align">
-        <div class="col s4">
-          <i class="large material-icons">account_box</i>
-          <p class="flow-text">First, create a new account.</p>
-        </div>
-        <div class="col s4">
-          <i class="large material-icons">book</i>
-          <p class="flow-text">Add books you are willing to trade.</p>
-        </div>
-        <div class="col s4">
-          <i class="large material-icons">check_box</i>
-          <p class="flow-text">You are ready to trade!</p>
+      <br />
+      <div class="row">
+        <div class="col m8 offset-m2 s12">
+          <h3 class="center-align">Sign up</h3>
+          <br />
+          <div class="errorContainer"></div>
+          <form method="POST" action="/signup">
+            <div class="input-field">
+              <i class="material-icons prefix">account_circle</i>
+              <input id="username" type="text" name="username">
+              <label for="username">Username</label>
+            </div>
+            <div class="input-field">
+              <i class="material-icons prefix">dialpad</i>
+              <input id="password" type="password" name="password">
+              <label for="password">Password</label>
+            </div>
+            <br />
+            <div style="width: 100%;" class="center-align">
+              <button class="btn waves-effect waves-light" id="signup" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <footer class="page-footer light-blue">
     <div class="container">
@@ -94,6 +96,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/scripts/index.js"></script>
-
 </body>
 </html>

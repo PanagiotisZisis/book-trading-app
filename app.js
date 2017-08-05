@@ -56,3 +56,5 @@ app.use(cors());
 
 // routes
 require('./routes/index')(app, io);
+require('./routes/signup')(app, io);
+require('./routes/login')(app, io);
