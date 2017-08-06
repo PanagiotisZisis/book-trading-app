@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (app, io) => {
+module.exports = app => {
 
   app.get('/logout', (req, res) => {
     req.logout();

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (app, io) => {
+module.exports = app => {
 
   app.get('/', (req, res) => {
     console.log(req.user);
@@ -13,6 +13,7 @@ module.exports = (app, io) => {
 
     });*/
 
-    res.render('index');
+    res.render('index', { user: req.user });
   });
+  
 };

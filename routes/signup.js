@@ -3,7 +3,7 @@
 const bcrypt = require('bcryptjs');
 const Users = require('../models/users');
 
-module.exports = (app, io) => {
+module.exports = app => {
 
   app.get('/signup', (req, res) => {
     res.render('signup', { errors: false });

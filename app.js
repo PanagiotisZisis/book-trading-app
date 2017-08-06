@@ -58,7 +58,7 @@ app.use(cors());
 require('./config/passport')(passport);
 
 // routes
-require('./routes/index')(app, io);
-require('./routes/signup')(app, io);
-require('./routes/login')(app, io);
-require('./routes/logout')(app, io);
+require('./routes/index')(app);
+require('./routes/signup')(app);
+require('./routes/login')(app);
+require('./routes/logout')(app);

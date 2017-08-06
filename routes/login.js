@@ -2,7 +2,7 @@
 
 const passport = require('passport');
 
-module.exports = (app, io) => {
+module.exports = app => {
 
   app.get('/login', (req, res) => {
     res.render('login', { error: req.flash('error') });
