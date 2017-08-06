@@ -3,7 +3,7 @@
 module.exports = (app, io) => {
 
   app.get('/', (req, res) => {
-    
+    console.log(req.user);
     /*io.on('connection', socket => {
       socket.emit('message', 'message from server');
 
@@ -15,5 +15,4 @@ module.exports = (app, io) => {
 
     res.render('index');
   });
-  
 };

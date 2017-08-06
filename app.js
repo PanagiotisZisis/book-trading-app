@@ -54,7 +54,11 @@ app.use(helmet());
 app.use(compression());
 app.use(cors());
 
+// passport configuration
+require('./config/passport')(passport);
+
 // routes
 require('./routes/index')(app, io);
 require('./routes/signup')(app, io);
 require('./routes/login')(app, io);
+require('./routes/logout')(app, io);

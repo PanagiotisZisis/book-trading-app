@@ -37,7 +37,7 @@
         <div class="col m8 offset-m2 s12">
           <h3 class="center-align">Log in</h3>
           <br />
-          <div class="errorContainer"></div>
+          <div class="errorContainer" data-error="<%= error %>"></div>
           <form method="POST" action="/login">
             <div class="input-field">
               <i class="material-icons prefix">account_circle</i>
@@ -87,7 +87,7 @@
     <div class="footer-copyright dark-blue">
       <div class="container white-text">
         © 2017 Panagiotis Zisis
-        <a class="right white-text" href="https://www.freecodecamp.com/panagiotiszisis">My FCC Account</a>
+        <a class="right white-text" href="https://www.freecodecamp.com/panagiotiszisis" target="_blank">My FCC Account</a>
       </div>
     </div>
   </footer>
@@ -97,6 +97,6 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/scripts/index.js"></script>
+  <script src="/scripts/login.js"></script>
 </body>
 </html>
