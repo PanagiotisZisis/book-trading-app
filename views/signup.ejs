@@ -37,21 +37,21 @@
         <div class="col m8 offset-m2 s12">
           <h3 class="center-align">Sign up</h3>
           <br />
-          <div class="errorContainer"></div>
+          <div class="errorContainer" data-errors="<%= errors %>"></div>
           <form method="POST" action="/signup">
             <div class="input-field">
               <i class="material-icons prefix">account_circle</i>
-              <input id="username" type="text" name="username">
+              <input id="username" type="text" name="username" data-length="20">
               <label for="username">Username</label>
             </div>
             <div class="input-field">
               <i class="material-icons prefix">dialpad</i>
-              <input id="password" type="password" name="password">
+              <input id="password" type="password" name="password" data-length="20">
               <label for="password">Password</label>
             </div>
             <br />
             <div style="width: 100%;" class="center-align">
-              <button class="btn waves-effect waves-light" id="signup" type="submit" name="action">Submit
+              <button class="btn waves-effect waves-light" id="signup" type="submit">Submit
                 <i class="material-icons right">send</i>
               </button>
             </div>
@@ -63,22 +63,24 @@
 
   <footer class="page-footer light-blue">
     <div class="container">
-      <div class="row">
-        <div class="col s6">
-          <h5 class="white-text">Manage a Book Trading Club</h5>
-          <p class="grey-text text-lighten-4">A project made for the Back-End Certification of freeCodeCamp.</p>
-        </div>
-        <div class="col s6">
-          <h5 class="white-text">User Stories</h5>
-          <ul>
-            <li>I can view all books posted by every user.</li>
-            <hr />
-            <li>I can add a new book.</li>
-            <hr />
-            <li>I can update my settings to store my full name, city, and state.</li>
-            <hr />
-            <li>I can propose a trade and wait for the other user to accept the trade.</li>
-          </ul>
+      <div class="section">
+        <div class="row">
+          <div class="col s6">
+            <h5 class="white-text">Manage a Book Trading Club</h5>
+            <p class="grey-text text-lighten-4">A project made for the Back-End Certification of freeCodeCamp.</p>
+          </div>
+          <div class="col s6">
+            <h5 class="white-text">User Stories</h5>
+            <ul>
+              <li>I can view all books posted by every user.</li>
+              <hr />
+              <li>I can add a new book.</li>
+              <hr />
+              <li>I can update my settings to store my full name, city, and state.</li>
+              <hr />
+              <li>I can propose a trade and wait for the other user to accept the trade.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -95,6 +97,6 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/scripts/index.js"></script>
+  <script src="/scripts/signup.js"></script>
 </body>
 </html>
