@@ -62,3 +62,5 @@ require('./routes/index')(app);
 require('./routes/signup')(app);
 require('./routes/login')(app);
 require('./routes/logout')(app);
+require('./routes/dashboard')(app, io);
+require('./routes/profile')(app);

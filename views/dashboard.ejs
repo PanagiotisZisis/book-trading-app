@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bookTradingApp | Dashboard</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+  <link rel="stylesheet" href="/styles/styles.css" />
+
+</head>
+<body class="sticky-footer-body">
+
+  <main>
+
+    <nav>
+      <div class="nav-wrapper">
+        <div class="container">
+          <a href="/" class="brand-logo">bookTradingApp</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/profile/<%= user._id %>">Profile</a></li>
+            <li><a href="/logout">Log out</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/profile/<%= user._id %>">Profile</a></li>
+            <li><a href="/logout">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <div class="col s12 m6">
+            <ul class="tabs">
+              <li class="tab col s4"><a class="active" href="#test1">All Books</a></li>
+              <li class="tab col s4"><a href="#test2">My Books</a></li>
+              <li class="tab col s4"><a href="#test3">Pending</a></li>
+            </ul>
+          </div>
+          <div id="test1" class="col s12">All Books</div>
+          <div id="test2" class="col s12">My Books</div>
+          <div id="test3" class="col s12">Pending</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="page-footer dark-blue">
+    <div class="footer-copyright dark-blue">
+      <div class="container white-text">
+        © 2017 Panagiotis Zisis
+        <a class="right white-text" href="https://www.freecodecamp.com/panagiotiszisis" target="_blank">My FCC Account</a>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/dashboard.js"></script>
+</body>
+</html>
