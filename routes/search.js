@@ -15,6 +15,10 @@ module.exports = app => {
 
     const title = req.query.title;
     const key = process.env.API_KEY;
+
+    if (!title) {
+      return res.json({ error: 'no title' });
+    }
     
     request(`https://www.googleapis.com/books/v1/volumes?q=${title}&printType=books&key=${key}`, (error, response, body) => {
 
@@ -23,9 +27,9 @@ module.exports = app => {
       console.log('body:', body);*/
 
       if (error) {
-        return res.json({ error: error });
+        return res.json(JSON.parse(error));
       }
-      res.json(body);
+      res.json(JSON.parse(body));
     });
 
   });
