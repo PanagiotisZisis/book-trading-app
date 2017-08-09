@@ -16,10 +16,16 @@ module.exports = app => {
     const title = req.query.title;
     const key = process.env.API_KEY;
     
-    request(`https://www.googleapis.com/books/v1/volumes?q=${title}&maxResults=40&printType=books&key=${key}`, (error, response, body) => {
-      console.log('error', error);
+    request(`https://www.googleapis.com/books/v1/volumes?q=${title}&printType=books&key=${key}`, (error, response, body) => {
+
+      /*console.log('error', error);
       console.log('statusCode:', response && response.statusCode);
-      console.log('body:', body);
+      console.log('body:', body);*/
+
+      if (error) {
+        return res.json({ error: error });
+      }
+      res.json(body);
     });
 
   });

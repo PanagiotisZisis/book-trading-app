@@ -9,7 +9,7 @@ const userSchema = new Schema({
   name: String,
   city: String,
   state: String,
-  books: [String]
+  books: [[]]
 });
 
 module.exports = mongoose.model('users', userSchema);

@@ -5,14 +5,18 @@ $(document).ready(function() {
   // burger button
   $(".button-collapse").sideNav();
 
-  var data = 'siddhartha';
+  $('#addBookButton').click(function() {
 
-  $.ajax({
-    type: 'GET',
-    url: 'http://localhost:3000/search?title=' + data,
-    success: function(data) {
-      console.log(data);
-    }
+    var searchTerm = $('#addBook').val();
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/search?title=' + searchTerm,
+      success: function(data) {
+        console.log(data);
+      }
+    });
+
   });
 
 });
