@@ -20,7 +20,7 @@ module.exports = app => {
       return res.json({ error: 'no title' });
     }
     
-    request(`https://www.googleapis.com/books/v1/volumes?q=${title}&printType=books&key=${key}`, (error, response, body) => {
+    request(`https://www.googleapis.com/books/v1/volumes?q=${title}&printType=books&maxResults=40&key=${key}`, (error, response, body) => {
 
       /*console.log('error', error);
       console.log('statusCode:', response && response.statusCode);

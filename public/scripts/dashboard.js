@@ -38,21 +38,32 @@ $(document).ready(function() {
           '<div class="divider"></div>'
         );
         books.items.forEach(function(book) {
+          var authors = book.volumeInfo.authors;
+          if (!authors) {
+             authors = '';
+          }
+          if (book.volumeInfo.hasOwnProperty('imageLinks')) {
+            var thumbnail = book.volumeInfo.imageLinks.thumbnail;
+            var imgAttr = 'src="' + thumbnail + '"';
+          } else {
+            var thumbnail = 'https://dummyimage.com/128x183/000000/ffffff&text=No+image+found';
+            var imgAttr = 'src="' + thumbnail + '"';
+          }
           $('.modal-content').append(
             '<div class="cardContainer">' +
               '<div class="card horizontal">' +
                 '<div class="card-image">' +
-                  '<img src="' + book.volumeInfo.imageLinks.thumbnail + '">' +
+                  '<img ' + imgAttr + '>' +
                 '</div>' +
                 '<div class="card-stacked">' +
                   '<div class="card-content">' +
                     '<p class="flow-text">' + book.volumeInfo.title + '</p>' +
                     '<div class="divider"></div>' +
-                    '<p class="flow-text">' + book.volumeInfo.authors + '</p>' +
+                    '<p class="flow-text">' + authors + '</p>' +
                   '</div>' +
                   '<div class="card-action">' +
                     '<a href="#"' +
-                    'data-img="' + book.volumeInfo.imageLinks.smallThumbnail + '"' +
+                    'data-img="' + thumbnail + '"' +
                     'data-title="' + book.volumeInfo.title + '"' +
                     'class="addToCollection">Add</a>' +
                   '</div>' +
