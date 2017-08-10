@@ -2,7 +2,10 @@
 
 $(document).ready(function() {
 
-  // burger button
+  // modal initialization
+  $('.modal').modal();
+
+  // burger button initialization
   $(".button-collapse").sideNav();
 
   // removing ajax request error alert when switching tabs
@@ -29,7 +32,101 @@ $(document).ready(function() {
           '</div>'
         );
       } else {
-        // open modal and populate its body
+        // populate modal's body and then open it
+        $('.modal-content').html(
+          '<h4>Select your Book</h4>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cardContainer">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="https://lorempixel.com/100/190/nature/6">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<h4>Book Title</h4>' +
+                '</div>' +
+                '<div class="card-action">' +
+                  '<a href="#">Add</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+        $('#modal1').modal('open');
       }
     });
 
