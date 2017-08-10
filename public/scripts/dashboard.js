@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('.modal').modal();
 
   // burger button initialization
-  $(".button-collapse").sideNav();
+  $('.button-collapse').sideNav();
 
   // removing ajax request error alert when switching tabs
   $('.tabs').click(function() {
@@ -35,6 +35,40 @@ $(document).ready(function() {
         // populate modal's body and then open it
         $('.modal-content').html(
           '<h4>Select your Book</h4>' +
+          '<div class="divider"></div>'
+        );
+        books.items.forEach(function(book) {
+          $('.modal-content').append(
+            '<div class="cardContainer">' +
+              '<div class="card horizontal">' +
+                '<div class="card-image">' +
+                  '<img src="' + book.volumeInfo.imageLinks.thumbnail + '">' +
+                '</div>' +
+                '<div class="card-stacked">' +
+                  '<div class="card-content">' +
+                    '<p class="flow-text">' + book.volumeInfo.title + '</p>' +
+                    '<div class="divider"></div>' +
+                    '<p class="flow-text">' + book.volumeInfo.authors + '</p>' +
+                  '</div>' +
+                  '<div class="card-action">' +
+                    '<a href="#"' +
+                    'data-img="' + book.volumeInfo.imageLinks.smallThumbnail + '"' +
+                    'data-title="' + book.volumeInfo.title + '"' +
+                    'class="addToCollection">Add</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
+
+          // modal book covers
+          $('.materialboxed').materialbox();
+
+
+        });
+        /*$('.modal-content').html(
+          '<h4>Select your Book</h4>' +
+          '<div class="divider"></div>' +
           '<div class="cardContainer">' +
             '<div class="card horizontal">' +
               '<div class="card-image">' +
@@ -125,7 +159,7 @@ $(document).ready(function() {
               '</div>' +
             '</div>' +
           '</div>'
-        );
+        );*/
         $('#modal1').modal('open');
       }
     });
