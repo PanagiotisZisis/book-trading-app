@@ -13,6 +13,16 @@ $(document).ready(function() {
     $('.errorContainer').html('');
   });
 
+  var userBooks = $('#myBooks').data('userbooks');
+  if (!userBooks) {
+    $('#myCollection').html('<h5>You have no Books yet.</h5>');
+  } else {
+    $('#myCollection').html('');
+    userBooks.forEach(function(book) {
+      $('#myCollection').append('<h2>' + book.title + '</h2>');
+    });
+  }
+
   $('#addBookButton').click(function() {
 
     $('.errorContainer').html('');

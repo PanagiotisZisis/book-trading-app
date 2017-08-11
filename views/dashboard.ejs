@@ -39,12 +39,12 @@
         <div class="row">
           <div class="col s12 m6">
             <ul class="tabs">
-              <li class="tab col s4"><a class="active" href="#test1">All Books</a></li>
-              <li class="tab col s4"><a href="#test2">My Books</a></li>
-              <li class="tab col s4"><a href="#test3">Pending</a></li>
+              <li class="tab col s4"><a class="active" href="#allBooks">All Books</a></li>
+              <li class="tab col s4"><a href="#myBooks">My Books</a></li>
+              <li class="tab col s4"><a href="#pending">Pending</a></li>
             </ul>
           </div>
-          <div id="test1" class="col s12">
+          <div id="allBooks" class="col s12">
             <div class="center-align">
               <div class="preloader-wrapper big active preloader">
                 <div class="spinner-layer spinner-blue">
@@ -89,7 +89,7 @@
               </div>
             </div>
           </div>
-          <div id="test2" class="col s12">
+          <div id="myBooks" class="col s12" data-userbooks="<%= userBooks %>">
             <div class="section">
               <h4>Add Book</h4>
               <div class="row">
@@ -108,51 +108,53 @@
             </div>
             <div class="divider"></div>
             <h4>Your Collection</h4>
-            <div class="center-align">
-              <div class="preloader-wrapper big active preloader">
-                <div class="spinner-layer spinner-blue">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+            <div id="myCollection">
+              <div class="center-align">
+                <div class="preloader-wrapper big active preloader">
+                  <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div class="spinner-layer spinner-red">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+                  <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div class="spinner-layer spinner-yellow">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+                  <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div class="spinner-layer spinner-green">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+                  <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div id="test3" class="col s12">
+          <div id="pending" class="col s12">
             Pending Requests
           </div>
         </div>
