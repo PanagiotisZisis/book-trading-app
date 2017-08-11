@@ -64,4 +64,4 @@ require('./routes/login')(app);
 require('./routes/logout')(app);
 require('./routes/dashboard')(app, io);
 require('./routes/profile')(app);
-require('./routes/search')(app);
+require('./routes/api')(app);

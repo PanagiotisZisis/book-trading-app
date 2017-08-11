@@ -10,6 +10,7 @@ module.exports = (app, io) => {
   };
 
   app.get('/dashboard/:userid', isLoggedIn, (req, res) => {
+    console.log(req.user);
     res.render('dashboard', { user: req.user });
   });
 

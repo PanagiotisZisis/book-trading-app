@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('request');
+const Books = require('../models/books');
 
 module.exports = app => {
 
@@ -11,7 +12,7 @@ module.exports = app => {
     res.redirect('/login');
   };
 
-  app.get('/search', isLoggedIn, (req, res) => {
+  app.get('/api', isLoggedIn, (req, res) => {
 
     const title = req.query.title;
     const key = process.env.API_KEY;
@@ -32,6 +33,27 @@ module.exports = app => {
       res.json(JSON.parse(body));
     });
 
+  });
+
+  app.post('/api', isLoggedIn, (req, res) => {
+
+    const username = req.user.username;
+    const title = req.body.title;
+    const authors = req.body.authors;
+    const img = req.body.img;
+
+    const newBook = {
+      username,
+      title,
+      authors,
+      img
+    };
+
+    Books.create(newBook, err => {
+      if (err) throw err;
+      res.json({ success: 'book added successfully' });
+    });
+    
   });
 
 };

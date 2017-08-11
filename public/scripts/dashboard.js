@@ -20,9 +20,8 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/search?title=' + searchTerm,
+      url: 'http://localhost:3000/api?title=' + searchTerm,
     }).done(function(books) {
-      console.log(books);
       if (books.hasOwnProperty('error')) {
         $('.errorContainer').html(
           '<div class="col m8 offset-m2 s12">' + 
@@ -40,20 +39,19 @@ $(document).ready(function() {
         books.items.forEach(function(book) {
           var authors = book.volumeInfo.authors;
           if (!authors) {
-             authors = '';
+             authors = ['Author was not found'];
           }
+          var thumbnail = '';
           if (book.volumeInfo.hasOwnProperty('imageLinks')) {
-            var thumbnail = book.volumeInfo.imageLinks.thumbnail;
-            var imgAttr = 'src="' + thumbnail + '"';
+            thumbnail = book.volumeInfo.imageLinks.thumbnail;
           } else {
-            var thumbnail = 'https://dummyimage.com/128x183/000000/ffffff&text=No+image+found';
-            var imgAttr = 'src="' + thumbnail + '"';
+            thumbnail = 'https://dummyimage.com/128x183/000000/ffffff&text=No+image+found';
           }
           $('.modal-content').append(
             '<div class="cardContainer">' +
               '<div class="card horizontal">' +
                 '<div class="card-image">' +
-                  '<img ' + imgAttr + '>' +
+                  '<img src="' + thumbnail + '">' +
                 '</div>' +
                 '<div class="card-stacked">' +
                   '<div class="card-content">' +
@@ -65,114 +63,45 @@ $(document).ready(function() {
                     '<a href="#"' +
                     'data-img="' + thumbnail + '"' +
                     'data-title="' + book.volumeInfo.title + '"' +
-                    'class="addToCollection">Add</a>' +
+                    'data-authors="' + authors + '"' +
+                    ' class="addToCollection">Add</a>' +
                   '</div>' +
                 '</div>' +
               '</div>' +
             '</div>'
           );
 
-          // modal book covers
-          $('.materialboxed').materialbox();
+        });
+        
+        $('#modal1').modal('open');
 
+        // adding a book
+        $('.addToCollection').click(function() {
+          
+          var title = $(this).data('title');
+          var img = $(this).data('img');
+          var bookAuthors = $(this).data('authors').split(',');
+
+          var newBook = {
+            title: title,
+            authors: bookAuthors,
+            img: img
+          };
+
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/api',
+            data: JSON.stringify(newBook),
+            contentType: 'application/json'
+          }).done(function(data) {
+            console.log(data);
+            $('#modal1').modal('close');
+          });
 
         });
-        /*$('.modal-content').html(
-          '<h4>Select your Book</h4>' +
-          '<div class="divider"></div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cardContainer">' +
-            '<div class="card horizontal">' +
-              '<div class="card-image">' +
-                '<img src="https://lorempixel.com/100/190/nature/6">' +
-              '</div>' +
-              '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                  '<h4>Book Title</h4>' +
-                '</div>' +
-                '<div class="card-action">' +
-                  '<a href="#">Add</a>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>'
-        );*/
-        $('#modal1').modal('open');
+
       }
+
     });
 
   });
