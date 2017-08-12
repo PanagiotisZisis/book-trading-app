@@ -3,7 +3,7 @@
 const request = require('request');
 const Books = require('../models/books');
 
-module.exports = app => {
+module.exports = (app, io) => {
 
   const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -35,7 +35,7 @@ module.exports = app => {
 
   });
 
-  app.post('/api', isLoggedIn, (req, res) => {
+  /*app.post('/api', isLoggedIn, (req, res) => {
 
     const username = req.user.username;
     const title = req.body.title;
@@ -54,6 +54,6 @@ module.exports = app => {
       res.json({ success: 'book added successfully' });
     });
     
-  });
+  });*/
 
 };

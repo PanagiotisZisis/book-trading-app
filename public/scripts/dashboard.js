@@ -14,6 +14,7 @@ $(document).ready(function() {
   });
 
   var userBooks = $('#myBooks').data('userbooks');
+  console.log(userBooks);
   if (!userBooks) {
     $('#myCollection').html('<h5>You have no Books yet.</h5>');
   } else {
@@ -98,7 +99,16 @@ $(document).ready(function() {
             img: img
           };
 
-          $.ajax({
+          // socket.io initialization
+          var socket = io();
+
+          socket.emit('addBook', newBook);
+          socket.on('addBookSuccess', function(msg) {
+            console.log(msg);
+            $('#modal1').modal('close');
+            $('#myCollection').append('<h4>new book added</h4>');
+          });
+          /*$.ajax({
             type: 'POST',
             url: 'http://localhost:3000/api',
             data: JSON.stringify(newBook),
@@ -106,7 +116,7 @@ $(document).ready(function() {
           }).done(function(data) {
             console.log(data);
             $('#modal1').modal('close');
-          });
+          });*/
 
         });
 

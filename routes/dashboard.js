@@ -14,6 +14,26 @@ module.exports = (app, io) => {
   app.get('/dashboard/:userid', isLoggedIn, (req, res) => {
     console.log(req.user);
 
+    io.on('connect', socket => {
+      
+      socket.on('addBook', book => {
+
+        const newBook = {
+          username: req.user.username,
+          title: book.title,
+          authors: book.authors,
+          img: book.img
+        };
+
+        Books.create(newBook, err => {
+          if (err) throw err;
+          socket.emit('addBookSuccess', 'new book added');
+        });
+
+      });
+      
+    });
+
     Books.find({ username: req.user.username }, (err, docs) => {
       if (err) throw err;
       if (docs.length === 0) {
