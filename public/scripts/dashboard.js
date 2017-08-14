@@ -13,8 +13,40 @@ $(document).ready(function() {
     $('.errorContainer').html('');
   });
 
+  // populating All Books Tab
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:3000/api/allBooks'
+  }).done(function(data) {
+    $('#allBooks').html('');
+    var allBooks = data.allBooks;
+    allBooks.forEach(function(book) {
+      $('#allBooks').append(
+        '<div class="card horizontal">' +
+          '<div class="card-image">' +
+            '<img src="' + book.img + '">' +
+          '</div>' +
+          '<div class="card-stacked">' +
+            '<div class="card-content">' +
+              '<p class="flow-text">' + book.title + '</p>' +
+              '<div class="divider"></div>' +
+              '<p class="flow-text">' + book.authors + '</p>' +
+            '</div>' +
+            '<div class="card-action">' +
+              '<a href="javascript:void(0)"' +
+              'data-img="' + book.img + '"' +
+              'data-title="' + book.title + '"' +
+              'data-authors="' + book.authors + '"' +
+              'data-id="' + book._id + '"' +
+              ' class="requestTrade">Request Trade</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    });
+  });
+
   var userBooks = $('#myBooks').data('userbooks');
-  console.log(userBooks);
   if (!userBooks) {
     $('#myCollection').html('<h5>You have no Books added yet.</h5>');
   } else {
@@ -117,16 +149,6 @@ $(document).ready(function() {
             authors: bookAuthors,
             img: img
           };
-
-          // socket.io initialization
-          /*var socket = io();
-
-          socket.emit('addBook', newBook);
-          socket.on('addBookSuccess', function(msg) {
-            console.log(msg);
-            $('#modal1').modal('close');
-            $('#myCollection').append('<h4>new book added</h4>');
-          });*/
 
           $.ajax({
             type: 'POST',

@@ -67,4 +67,21 @@ module.exports = (app, io) => {
 
   });
 
+  app.get('/api/allBooks', isLoggedIn, (req, res) => {
+
+    const user = req.user.username;
+
+    Books.find({}, (err, docs) => {
+      if (err) throw err;
+      const allBooks = docs.filter(book => {
+        return book.username !== user;
+      });
+      if (allBooks.length === 0) {
+        return res.json({ docs: false });
+      }
+      res.json({ allBooks });
+    });
+
+  });
+
 };
