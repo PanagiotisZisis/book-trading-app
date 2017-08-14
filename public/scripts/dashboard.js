@@ -30,7 +30,7 @@ $(document).ready(function() {
             '<div class="card-content">' +
               '<p class="flow-text">' + book.title + '</p>' +
               '<div class="divider"></div>' +
-              '<p class="flow-text">' + book.authors + '</p>' +
+              '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
             '</div>' +
             '<div class="card-action">' +
               '<a href="javascript:void(0)"' +
@@ -61,7 +61,7 @@ $(document).ready(function() {
             '<div class="card-content">' +
               '<p class="flow-text">' + book.title + '</p>' +
               '<div class="divider"></div>' +
-              '<p class="flow-text">' + book.authors + '</p>' +
+              '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
             '</div>' +
             '<div class="card-action">' +
               '<a href="javascript:void(0)"' +
@@ -120,7 +120,7 @@ $(document).ready(function() {
                 '<div class="card-content">' +
                   '<p class="flow-text">' + book.volumeInfo.title + '</p>' +
                   '<div class="divider"></div>' +
-                  '<p class="flow-text">' + authors + '</p>' +
+                  '<p class="flow-text">' + authors.join(', ') + '</p>' +
                 '</div>' +
                 '<div class="card-action">' +
                   '<a href="javascript:void(0)"' +
