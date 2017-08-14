@@ -16,11 +16,32 @@ $(document).ready(function() {
   var userBooks = $('#myBooks').data('userbooks');
   console.log(userBooks);
   if (!userBooks) {
-    $('#myCollection').html('<h5>You have no Books yet.</h5>');
+    $('#myCollection').html('<h5>You have no Books added yet.</h5>');
   } else {
     $('#myCollection').html('');
     userBooks.forEach(function(book) {
-      $('#myCollection').append('<h2>' + book.title + '</h2>');
+      $('#myCollection').append(
+        '<div class="card horizontal">' +
+          '<div class="card-image">' +
+            '<img src="' + book.img + '">' +
+          '</div>' +
+          '<div class="card-stacked">' +
+            '<div class="card-content">' +
+              '<p class="flow-text">' + book.title + '</p>' +
+              '<div class="divider"></div>' +
+              '<p class="flow-text">' + book.authors + '</p>' +
+            '</div>' +
+            '<div class="card-action">' +
+              '<a href="javascript:void(0)"' +
+              'data-img="' + book.img + '"' +
+              'data-title="' + book.title + '"' +
+              'data-authors="' + book.authors + '"' +
+              'data-id="' + book._id + '"' +
+              ' class="deleteFromCollection">Delete</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
     });
   }
 
@@ -59,24 +80,22 @@ $(document).ready(function() {
             thumbnail = 'https://dummyimage.com/128x183/000000/ffffff&text=No+image+found';
           }
           $('.modal-content').append(
-            '<div class="cardContainer">' +
-              '<div class="card horizontal">' +
-                '<div class="card-image">' +
-                  '<img src="' + thumbnail + '">' +
+            '<div class="card horizontal">' +
+              '<div class="card-image">' +
+                '<img src="' + thumbnail + '">' +
+              '</div>' +
+              '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                  '<p class="flow-text">' + book.volumeInfo.title + '</p>' +
+                  '<div class="divider"></div>' +
+                  '<p class="flow-text">' + authors + '</p>' +
                 '</div>' +
-                '<div class="card-stacked">' +
-                  '<div class="card-content">' +
-                    '<p class="flow-text">' + book.volumeInfo.title + '</p>' +
-                    '<div class="divider"></div>' +
-                    '<p class="flow-text">' + authors + '</p>' +
-                  '</div>' +
-                  '<div class="card-action">' +
-                    '<a href="#"' +
-                    'data-img="' + thumbnail + '"' +
-                    'data-title="' + book.volumeInfo.title + '"' +
-                    'data-authors="' + authors + '"' +
-                    ' class="addToCollection">Add</a>' +
-                  '</div>' +
+                '<div class="card-action">' +
+                  '<a href="javascript:void(0)"' +
+                  'data-img="' + thumbnail + '"' +
+                  'data-title="' + book.volumeInfo.title + '"' +
+                  'data-authors="' + authors + '"' +
+                  ' class="addToCollection">Add</a>' +
                 '</div>' +
               '</div>' +
             '</div>'
@@ -100,28 +119,69 @@ $(document).ready(function() {
           };
 
           // socket.io initialization
-          var socket = io();
+          /*var socket = io();
 
           socket.emit('addBook', newBook);
           socket.on('addBookSuccess', function(msg) {
             console.log(msg);
             $('#modal1').modal('close');
             $('#myCollection').append('<h4>new book added</h4>');
-          });
-          /*$.ajax({
+          });*/
+
+          $.ajax({
             type: 'POST',
             url: 'http://localhost:3000/api',
             data: JSON.stringify(newBook),
             contentType: 'application/json'
-          }).done(function(data) {
-            console.log(data);
+          }).done(function(newBook) {
+            $('#myCollection').append(
+              '<div class="card horizontal">' +
+                '<div class="card-image">' +
+                  '<img src="' + newBook.img + '">' +
+                '</div>' +
+                '<div class="card-stacked">' +
+                  '<div class="card-content">' +
+                    '<p class="flow-text">' + newBook.title + '</p>' +
+                    '<div class="divider"></div>' +
+                    '<p class="flow-text">' + newBook.authors + '</p>' +
+                  '</div>' +
+                  '<div class="card-action">' +
+                    '<a href="javascript:void(0)"' +
+                    'data-img="' + newBook.img + '"' +
+                    'data-title="' + newBook.title + '"' +
+                    'data-authors="' + newBook.authors + '"' +
+                    'data-id="' + newBook._id + '"' +
+                    ' class="deleteFromCollection">Delete</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>'
+            );
             $('#modal1').modal('close');
-          });*/
+          });
 
         });
 
       }
 
+    });
+
+  });
+
+  $('#myCollection').on('click', '.deleteFromCollection', function() {
+    
+    var bookId = $(this).data('id');
+    var data = { bookId: bookId };
+    var temp = $(this).parents()[2];
+
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:3000/api',
+      contentType: 'application/json',
+      data: JSON.stringify(data)
+    }).done(function(data) {
+      if (data.hasOwnProperty('success')) {
+        temp.remove();
+      }
     });
 
   });

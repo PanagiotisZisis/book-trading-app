@@ -35,7 +35,7 @@ module.exports = (app, io) => {
 
   });
 
-  /*app.post('/api', isLoggedIn, (req, res) => {
+  app.post('/api', isLoggedIn, (req, res) => {
 
     const username = req.user.username;
     const title = req.body.title;
@@ -49,11 +49,22 @@ module.exports = (app, io) => {
       img
     };
 
-    Books.create(newBook, err => {
+    Books.create(newBook, (err, addedBook) => {
       if (err) throw err;
-      res.json({ success: 'book added successfully' });
+      res.json(addedBook);
     });
     
-  });*/
+  });
+
+  app.delete('/api', isLoggedIn, (req, res) => {
+
+    const { bookId } = req.body;
+    
+    Books.deleteOne({ _id: bookId }, err => {
+      if (err) throw err;
+      res.json({ success: 'successful delete', id: bookId });
+    });
+
+  });
 
 };

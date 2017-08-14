@@ -14,7 +14,7 @@ module.exports = (app, io) => {
   app.get('/dashboard/:userid', isLoggedIn, (req, res) => {
     console.log(req.user);
 
-    io.on('connect', socket => {
+    /*io.on('connect', socket => {
       
       socket.on('addBook', book => {
 
@@ -32,7 +32,7 @@ module.exports = (app, io) => {
 
       });
       
-    });
+    });*/
 
     Books.find({ username: req.user.username }, (err, docs) => {
       if (err) throw err;
