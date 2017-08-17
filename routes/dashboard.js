@@ -14,6 +14,14 @@ module.exports = (app, io) => {
   app.get('/dashboard/:userid', isLoggedIn, (req, res) => {
     console.log(req.user);
 
+    io.on('connect', socket => {
+
+      socket.on('refresh', () => {
+        socket.broadcast.emit('refreshReply');
+      });
+
+    });
+
     Books.find({ username: req.user.username }, (err, docs) => {
       if (err) throw err;
       if (docs.length === 0) {

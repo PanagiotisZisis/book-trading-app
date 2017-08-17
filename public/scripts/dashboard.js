@@ -13,39 +13,49 @@ $(document).ready(function() {
     $('.errorContainer').html('');
   });
 
-  // populating All Books Tab
-  $.ajax({
-    type: 'GET',
-    url: 'http://localhost:3000/api/allBooks'
-  }).done(function(data) {
-    $('#allBooks').html('');
-    var allBooks = data.allBooks;
-    allBooks.forEach(function(book) {
-      $('#allBooks').append(
-        '<div class="card horizontal">' +
-          '<div class="card-image">' +
-            '<img src="' + book.img + '">' +
-          '</div>' +
-          '<div class="card-stacked">' +
-            '<div class="card-content">' +
-              '<p class="flow-text">' + book.title + '</p>' +
-              '<div class="divider"></div>' +
-              '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
-            '</div>' +
-            '<div class="card-action">' +
-              '<a href="javascript:void(0)"' +
-              'data-img="' + book.img + '"' +
-              'data-title="' + book.title + '"' +
-              'data-authors="' + book.authors + '"' +
-              'data-id="' + book._id + '"' +
-              ' class="requestTrade">Request Trade</a>' +
-            '</div>' +
-          '</div>' +
-        '</div>'
-      );
-    });
-  });
+  // initializing socket.io
+  var socket = io();
 
+  // populating All Books Tab
+  function getAllBooks() {
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/allBooks'
+    }).done(function(data) {
+      $('#allBooks').html('');
+      var allBooks = data.allBooks;
+      allBooks.forEach(function(book) {
+        $('#allBooks').append(
+          '<div class="card horizontal">' +
+            '<div class="card-image">' +
+              '<img src="' + book.img + '">' +
+            '</div>' +
+            '<div class="card-stacked">' +
+              '<div class="card-content">' +
+                '<p class="flow-text">' + book.title + '</p>' +
+                '<div class="divider"></div>' +
+                '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
+              '</div>' +
+              '<div class="card-action">' +
+                '<a href="javascript:void(0)"' +
+                'data-img="' + book.img + '"' +
+                'data-title="' + book.title + '"' +
+                'data-authors="' + book.authors + '"' +
+                'data-id="' + book._id + '"' +
+                ' class="requestTrade">Request Trade</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      });
+    });
+
+  }
+
+  getAllBooks();
+
+  //populating My Books Tab
   var userBooks = $('#myBooks').data('userbooks');
   if (!userBooks) {
     $('#myCollection').html('<h5>You have no Books added yet.</h5>');
@@ -77,6 +87,7 @@ $(document).ready(function() {
     });
   }
 
+  // Clicking the Search Button
   $('#addBookButton').click(function() {
 
     $('.errorContainer').html('');
@@ -150,6 +161,7 @@ $(document).ready(function() {
             img: img
           };
 
+          // updating My Books then refreshing All Books tab
           $.ajax({
             type: 'POST',
             url: 'http://localhost:3000/api',
@@ -178,6 +190,7 @@ $(document).ready(function() {
                 '</div>' +
               '</div>'
             );
+            socket.emit('refresh');
             $('#modal1').modal('close');
           });
 
@@ -189,6 +202,7 @@ $(document).ready(function() {
 
   });
 
+  // delete from My Books then refreshing All Books tab
   $('#myCollection').on('click', '.deleteFromCollection', function() {
     
     var bookId = $(this).data('id');
@@ -203,9 +217,14 @@ $(document).ready(function() {
     }).done(function(data) {
       if (data.hasOwnProperty('success')) {
         temp.remove();
+        socket.emit('refresh');
       }
     });
 
+  });
+
+  socket.on('refreshReply', function() {
+    getAllBooks();
   });
 
 });
