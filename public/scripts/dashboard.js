@@ -25,37 +25,72 @@ $(document).ready(function() {
     }).done(function(data) {
       $('#allBooks').html('');
       var allBooks = data.allBooks;
-      allBooks.forEach(function(book) {
-        $('#allBooks').append(
-          '<div class="card horizontal">' +
-            '<div class="card-image">' +
-              '<img src="' + book.img + '">' +
-            '</div>' +
-            '<div class="card-stacked">' +
-              '<div class="card-content">' +
-                '<p class="flow-text">' + book.title + '</p>' +
-                '<div class="divider"></div>' +
-                '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
-              '</div>' +
-              '<div class="card-action">' +
-                '<a href="javascript:void(0)"' +
-                'data-img="' + book.img + '"' +
-                'data-title="' + book.title + '"' +
-                'data-authors="' + book.authors + '"' +
-                'data-id="' + book._id + '"' +
-                ' class="requestTrade">Request Trade</a>' +
-              '</div>' +
-            '</div>' +
-          '</div>'
+      if (!allBooks) {
+        $('#allBooks').html(
+          '<h4>There are no books from other users yet.</h4>'
         );
-      });
+      } else {
+        allBooks.forEach(function(book) {
+          if (!book.tradeExists) {
+            $('#allBooks').append(
+              '<div class="card horizontal">' +
+                '<div class="card-image">' +
+                  '<img src="' + book.img + '">' +
+                '</div>' +
+                '<div class="card-stacked">' +
+                  '<div class="card-content">' +
+                    '<p class="flow-text">' + book.title + '</p>' +
+                    '<div class="divider"></div>' +
+                    '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
+                  '</div>' +
+                  '<div class="card-action">' +
+                    '<a href="javascript:void(0)"' +
+                    'data-img="' + book.img + '"' +
+                    'data-title="' + book.title + '"' +
+                    'data-authors="' + book.authors + '"' +
+                    'data-id="' + book._id + '"' +
+                    'data-username="' + book.username + '"' +
+                    ' class="requestTrade">Request Trade</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>'
+            );
+          } else {
+            $('#allBooks').append(
+              '<div class="card horizontal">' +
+                '<div class="card-image">' +
+                  '<img src="' + book.img + '">' +
+                '</div>' +
+                '<div class="card-stacked">' +
+                  '<div class="card-content">' +
+                    '<p class="flow-text">' + book.title + '</p>' +
+                    '<div class="divider"></div>' +
+                    '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
+                  '</div>' +
+                  '<div class="card-action">' +
+                    '<a href="javascript:void(0)"' +
+                    'data-img="' + book.img + '"' +
+                    'data-title="' + book.title + '"' +
+                    'data-authors="' + book.authors + '"' +
+                    'data-id="' + book._id + '"' +
+                    'data-username="' + book.username + '"' +
+                    '>Trade Requested</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>'
+            );
+          }
+          
+        });
+      }
+
     });
 
   }
 
   getAllBooks();
 
-  //populating My Books Tab
+  // populating My Books Tab
   var userBooks = $('#myBooks').data('userbooks');
   if (!userBooks) {
     $('#myCollection').html('<h5>You have no Books added yet.</h5>');
@@ -225,6 +260,47 @@ $(document).ready(function() {
 
   socket.on('refreshReply', function() {
     getAllBooks();
+  });
+
+  // requesting a trade
+  $('#allBooks').on('click', '.requestTrade', function() {
+
+    var bookId = $(this).data('id');
+    var username = $(this).data('username');
+    var text = $(this).text();
+    var title = $(this).data('title');
+
+    if (text === 'Request Trade') {
+      $(this).text('Trade Requested');
+      $(this).removeClass('requestTrade');
+    }
+
+    var newTrade = {
+      bookId: bookId,
+      username: username,
+      title: title
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/api/trade',
+      contentType: 'application/json',
+      data: JSON.stringify(newTrade)
+    });
+
+  });
+
+  // modifying Pending Tab
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:3000/api/trade'
+  }).done(function(data) {
+    if (data) {
+      var books = data.books;
+      if (books.length > 0) {
+        $('#pendingTab').text(books.length + '  pending');
+      }
+    }
   });
 
 });
