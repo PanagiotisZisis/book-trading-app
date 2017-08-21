@@ -7,7 +7,9 @@ const tradeSchema = new Schema({
   bookId: String,
   sender: String,
   recipient: String,
-  title: String
+  title: String,
+  img: String,
+  authors: [String]
 });
 
 module.exports = mongoose.model('trades', tradeSchema);

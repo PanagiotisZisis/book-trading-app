@@ -137,12 +137,16 @@ module.exports = (app, io) => {
     const recipient = req.body.username;
     const bookId = req.body.bookId;
     const title = req.body.title;
+    const img = req.body.img;
+    const authors = req.body.authors;
 
     const newTrade = {
       bookId,
       sender,
       recipient,
-      title
+      title,
+      img,
+      authors
     };
 
     Trades.findOne(newTrade, (err, doc) => {
