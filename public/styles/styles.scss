@@ -89,3 +89,15 @@ main {
 #allBooks {
   padding-top: 3.5%;
 }
+
+.cancelTrade:hover {
+  color: #e57373 * 1.2 !important;
+}
+
+.acceptRequest:hover {
+  color: #66bb6a * 1.2 !important;
+}
+
+.rejectRequest:hover {
+  color: #e57373 * 1.2 !important;
+}

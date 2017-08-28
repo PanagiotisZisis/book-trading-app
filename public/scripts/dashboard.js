@@ -309,7 +309,6 @@ $(document).ready(function() {
           '<div class="section" id="incoming">' +
             '<h4>Incoming Requests</h4>' +
           '</div>' +
-          '<div class="divider"></div>' +
           '<div class="section" id="outgoing">' +
             '<h4>Outgoing Requests</h4>' +
           '</div>'
@@ -353,7 +352,7 @@ $(document).ready(function() {
                   '<div class="card-action">' +
                     '<a href="javascript:void(0)"' +
                     'data-id="' + book._id + '"' +
-                    ' class="cancelTrade red-text text-lighten-2">Cancel Request</a>' +
+                    ' class="cancelTrade red-text text-lighten-1">Cancel Request</a>' +
                   '</div>' +
                 '</div>' +
               '</div>'
