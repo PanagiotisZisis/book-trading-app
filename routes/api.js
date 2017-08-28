@@ -160,16 +160,19 @@ module.exports = (app, io) => {
         Books.findOne({ _id: bookId }, (err, doc) => {
           if (err) throw err;
           if (doc) {
-            let toggleValue = !doc.tradeExists;
+            if (doc.tradeExists === false) {
+              let toggleValue = true;
+              
+              const updatedDoc = {
+                tradeExists: toggleValue
+              };
+  
+              Books.update({ _id: bookId }, updatedDoc, err => {
+                if (err) throw err;
+                res.json({ sucess: 'successful trade request' });
+              });
 
-            const updatedDoc = {
-              tradeExists: toggleValue
-            };
-
-            Books.update({ _id: bookId }, updatedDoc, err => {
-              if (err) throw err;
-              res.json({ sucess: 'successful trade request' });
-            });
+            }
 
           }
 

@@ -290,81 +290,104 @@ $(document).ready(function() {
       url: 'http://localhost:3000/api/trade',
       contentType: 'application/json',
       data: JSON.stringify(newTrade)
+    }).done(function() {
+      socket.emit('refreshPending');
     });
 
   });
 
-  // modifying Pending Tab
-  $.ajax({
-    type: 'GET',
-    url: 'http://localhost:3000/api/trade'
-  }).done(function(data) {
-    if (data) {
-      var username = $('body').data('username');
-      var books = data.books;
-      console.log(books);
-      if (books.length > 0) {
-        $('#pendingTab').text(books.length + '  pending');
-        $('#pending').html(
-          '<div class="section" id="incoming">' +
-            '<h4>Incoming Requests</h4>' +
-          '</div>' +
-          '<div class="section" id="outgoing">' +
-            '<h4>Outgoing Requests</h4>' +
-          '</div>'
-        );
-        books.forEach(function(book) {
-          if (book.recipient === username) {
-            $('#incoming').append(
-              '<p class="flow-text">User "' + book.sender + '" requested:</p>' +
-              '<div class="card horizontal">' +
-                '<div class="card-image">' +
-                  '<img src="' + book.img + '">' +
-                '</div>' +
-                '<div class="card-stacked">' +
-                  '<div class="card-content">' +
-                    '<p class="flow-text">' + book.title + '</p>' +
-                    '<div class="divider"></div>' +
-                    '<p class="flow-text">' + book.authors + '</p>' +
+  // populating Pending Tab
+  function populatePendingTab() {
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/trade'
+    }).done(function(data) {
+      if (data) {
+        var username = $('body').data('username');
+        var books = data.books;
+        console.log(books);
+        if (books.length > 0) {
+          $('#pendingTab').text(books.length + '  pending');
+          $('#pending').html(
+            '<div class="section" id="incoming">' +
+              '<h4>Incoming Requests</h4>' +
+            '</div>' +
+            '<div class="section" id="outgoing">' +
+              '<h4>Outgoing Requests</h4>' +
+            '</div>'
+          );
+          var incoming = 0;
+          var outgoing = 0;
+          books.forEach(function(book) {
+            if (book.recipient === username) {
+              incoming++;
+              $('#incoming').append(
+                '<p class="flow-text">User <strong>' + book.sender + '</strong> requested:</p>' +
+                '<div class="card horizontal">' +
+                  '<div class="card-image">' +
+                    '<img src="' + book.img + '">' +
                   '</div>' +
-                  '<div class="card-action">' +
-                    '<a href="javascript:void(0)"' +
-                    ' class="acceptRequest green-text text-lighten-2">Accept Trade</a>' +
-                    '<a href="javascript:void(0)"' +
-                    ' class="rejectRequest red-text text-lighten-2">Reject Trade</a>' +
+                  '<div class="card-stacked">' +
+                    '<div class="card-content">' +
+                      '<p class="flow-text">' + book.title + '</p>' +
+                      '<div class="divider"></div>' +
+                      '<p class="flow-text">' + book.authors + '</p>' +
+                    '</div>' +
+                    '<div class="card-action">' +
+                      '<a href="javascript:void(0)"' +
+                      ' class="acceptRequest green-text text-lighten-2">Accept Trade</a>' +
+                      '<a href="javascript:void(0)"' +
+                      ' class="rejectRequest red-text text-lighten-2">Reject Trade</a>' +
+                    '</div>' +
                   '</div>' +
-                '</div>' +
-              '</div>'
-            );
-          } else if (book.sender === username) {
-            $('#outgoing').append(
-              '<p class="flow-text">You requested this book from user "' + book.recipient + '":</p>' +
-              '<div class="card horizontal">' +
-                '<div class="card-image">' +
-                  '<img src="' + book.img + '">' +
-                '</div>' +
-                '<div class="card-stacked">' +
-                  '<div class="card-content">' +
-                    '<p class="flow-text">' + book.title + '</p>' +
-                    '<div class="divider"></div>' +
-                    '<p class="flow-text">' + book.authors + '</p>' +
+                '</div>'
+              );
+            } else if (book.sender === username) {
+              outgoing++;
+              $('#outgoing').append(
+                '<p class="flow-text">You requested this book from user <strong>' + book.recipient + '</strong>:</p>' +
+                '<div class="card horizontal">' +
+                  '<div class="card-image">' +
+                    '<img src="' + book.img + '">' +
                   '</div>' +
-                  '<div class="card-action">' +
-                    '<a href="javascript:void(0)"' +
-                    'data-id="' + book._id + '"' +
-                    ' class="cancelTrade red-text text-lighten-1">Cancel Request</a>' +
+                  '<div class="card-stacked">' +
+                    '<div class="card-content">' +
+                      '<p class="flow-text">' + book.title + '</p>' +
+                      '<div class="divider"></div>' +
+                      '<p class="flow-text">' + book.authors + '</p>' +
+                    '</div>' +
+                    '<div class="card-action">' +
+                      '<a href="javascript:void(0)"' +
+                      'data-id="' + book._id + '"' +
+                      ' class="cancelTrade red-text text-lighten-1">Cancel Request</a>' +
+                    '</div>' +
                   '</div>' +
-                '</div>' +
-              '</div>'
-            );
+                '</div>'
+              );
+            }
+          });
+          if (outgoing === 0) {
+            $('#outgoing').remove();
           }
-        });
-      } else {
-        $('#pending').html(
-          '<h4>No Pending Requests</h4>'
-        );
+          if (incoming === 0) {
+            $('#incoming').remove();
+          }
+        } else {
+          $('#pending').html(
+            '<h4>No Pending Requests</h4>'
+          );
+          $('#pendingTab').text('Pending');
+        }
       }
-    }
+    });
+
+  }
+
+  populatePendingTab();
+
+  socket.on('refreshPendingReply', function() {
+    populatePendingTab();
   });
 
 });
