@@ -91,36 +91,11 @@ $(document).ready(function() {
   getAllBooks();
 
   // populating My Books Tab
-  var userBooks = $('#myBooks').data('userbooks');
-  if (!userBooks) {
-    $('#myCollection').html('<h5>You have no Books added yet.</h5>');
-  } else {
-    $('#myCollection').html('');
-    userBooks.forEach(function(book) {
-      $('#myCollection').append(
-        '<div class="card horizontal">' +
-          '<div class="card-image">' +
-            '<img src="' + book.img + '">' +
-          '</div>' +
-          '<div class="card-stacked">' +
-            '<div class="card-content">' +
-              '<p class="flow-text">' + book.title + '</p>' +
-              '<div class="divider"></div>' +
-              '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
-            '</div>' +
-            '<div class="card-action">' +
-              '<a href="javascript:void(0)"' +
-              'data-img="' + book.img + '"' +
-              'data-title="' + book.title + '"' +
-              'data-authors="' + book.authors + '"' +
-              'data-id="' + book._id + '"' +
-              ' class="deleteFromCollection">Delete</a>' +
-            '</div>' +
-          '</div>' +
-        '</div>'
-      );
-    });
+  function populateMyBooks() {
+    socket.emit('getMyBooks', $('body').data('username'));
   }
+
+  populateMyBooks();
 
   // Clicking the Search Button
   $('#addBookButton').click(function() {
@@ -306,7 +281,6 @@ $(document).ready(function() {
       if (data) {
         var username = $('body').data('username');
         var books = data.books;
-        console.log(books);
         if (books.length > 0) {
           $('#pendingTab').text(books.length + '  pending');
           $('#pending').html(
@@ -336,8 +310,10 @@ $(document).ready(function() {
                     '</div>' +
                     '<div class="card-action">' +
                       '<a href="javascript:void(0)"' +
+                      'data-id="' + book._id + '"' +
                       ' class="acceptRequest green-text text-lighten-2">Accept Trade</a>' +
                       '<a href="javascript:void(0)"' +
+                      'data-id="' + book._id + '"' +
                       ' class="rejectRequest red-text text-lighten-2">Reject Trade</a>' +
                     '</div>' +
                   '</div>' +
@@ -386,8 +362,50 @@ $(document).ready(function() {
 
   populatePendingTab();
 
+  $('#pending').on('click', '.acceptRequest', function() {
+    var tradeId = $(this).data('id');
+    socket.emit('tradeAccepted', tradeId);
+  });
+
   socket.on('refreshPendingReply', function() {
     populatePendingTab();
   });
 
+  socket.on('tradeAcceptedReply', function() {
+    getAllBooks();
+    populatePendingTab();
+    populateMyBooks();
+  });
+
+  socket.on('getMyBooksReply', function(books) {
+    if (!books) {
+      $('#myCollection').html('<h5>You have no Books added yet.</h5>');
+    } else {
+      $('#myCollection').html('');
+      books.forEach(function(book) {
+        $('#myCollection').append(
+          '<div class="card horizontal">' +
+            '<div class="card-image">' +
+              '<img src="' + book.img + '">' +
+            '</div>' +
+            '<div class="card-stacked">' +
+              '<div class="card-content">' +
+                '<p class="flow-text">' + book.title + '</p>' +
+                '<div class="divider"></div>' +
+                '<p class="flow-text">' + book.authors.join(', ') + '</p>' +
+              '</div>' +
+              '<div class="card-action">' +
+                '<a href="javascript:void(0)"' +
+                'data-img="' + book.img + '"' +
+                'data-title="' + book.title + '"' +
+                'data-authors="' + book.authors + '"' +
+                'data-id="' + book._id + '"' +
+                ' class="deleteFromCollection">Delete</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      });
+    }
+  });
 });

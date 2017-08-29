@@ -1,6 +1,7 @@
 'use strict';
 
 const Books = require('../models/books');
+const Trades = require('../models/trades');
 
 module.exports = (app, io) => {
 
@@ -13,15 +14,7 @@ module.exports = (app, io) => {
 
   app.get('/dashboard/:userid', isLoggedIn, (req, res) => {
     console.log(req.user);
-
-    Books.find({ username: req.user.username }, (err, docs) => {
-      if (err) throw err;
-      if (docs.length === 0) {
-        return res.render('dashboard', { user: req.user, userBooks: false });
-      }
-      res.render('dashboard', { user: req.user, userBooks: JSON.stringify(docs) });
-    });
-
+    res.render('dashboard', { user: req.user });
   });
 
   app.get('/dashboard', isLoggedIn, (req, res) => {
@@ -29,6 +22,16 @@ module.exports = (app, io) => {
   });
 
   io.on('connect', socket => {
+
+    socket.on('getMyBooks', (user) => {
+      Books.find({ username: user }, (err, docs) => {
+        if (err) throw err;
+        if (docs.length === 0) {
+         return socket.emit('getMyBooksReply', false);
+        }
+        socket.emit('getMyBooksReply', docs);
+      });
+    });
     
     socket.on('refresh', () => {
       socket.broadcast.emit('refreshReply');
@@ -36,6 +39,27 @@ module.exports = (app, io) => {
 
     socket.on('refreshPending', () => {
       io.emit('refreshPendingReply');
+    });
+
+    socket.on('tradeAccepted', id => {
+      Trades.findById(id, (err, doc) => {
+        if (err) throw err;
+        const bookId = doc.bookId;
+        const sender = doc.sender;
+        let updatedDoc = {
+          username: sender,
+          tradeExists: false
+        };
+
+        Books.update({ _id: bookId}, updatedDoc, err => {
+          if (err) throw err;
+
+          Trades.remove({ bookId }, err => {
+            if (err) throw err;
+            io.emit('tradeAcceptedReply');
+          });
+        });
+      });
     });
 
   });
