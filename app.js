@@ -19,7 +19,7 @@ const flash = require('connect-flash');
 
 const app = express();
 // socket.io configuration
-const io = require('socket.io').listen(app.listen(3000));
+const io = require('socket.io').listen(app.listen(process.env.PORT || 3000));
 
 // view engine configuration
 app.set('views', path.join(__dirname, 'views'));
