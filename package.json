@@ -5,6 +5,9 @@
   "main": "app.js",
   "author": "Panagiotis Zisis",
   "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
