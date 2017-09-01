@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/allBooks'
+      url: 'http://booktradingapp.herokuapp.com/api/allBooks'
     }).done(function(data) {
       $('#allBooks').html('');
       var allBooks = data.allBooks;
@@ -105,7 +105,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api?title=' + searchTerm,
+      url: 'http://booktradingapp.herokuapp.com/api?title=' + searchTerm,
     }).done(function(books) {
       if (books.hasOwnProperty('error')) {
         $('.errorContainer').html(
@@ -174,7 +174,7 @@ $(document).ready(function() {
           // updating My Books then refreshing All Books tab
           $.ajax({
             type: 'POST',
-            url: 'http://localhost:3000/api',
+            url: 'http://booktradingapp.herokuapp.com/api',
             data: JSON.stringify(newBook),
             contentType: 'application/json'
           }).done(function(newBook) {
@@ -221,7 +221,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'DELETE',
-      url: 'http://localhost:3000/api',
+      url: 'http://booktradingapp.herokuapp.com/api',
       contentType: 'application/json',
       data: JSON.stringify(data)
     }).done(function(data) {
@@ -263,7 +263,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/trade',
+      url: 'http://booktradingapp.herokuapp.com/api/trade',
       contentType: 'application/json',
       data: JSON.stringify(newTrade)
     }).done(function() {
@@ -277,7 +277,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/trade'
+      url: 'http://booktradingapp.herokuapp.com/api/trade'
     }).done(function(data) {
       if (data) {
         var username = $('body').data('username');

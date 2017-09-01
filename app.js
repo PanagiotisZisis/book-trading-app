@@ -16,7 +16,6 @@ const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
 const flash = require('connect-flash');
-require('dotenv').config();
 
 const app = express();
 // socket.io configuration
