@@ -178,6 +178,7 @@ $(document).ready(function() {
             data: JSON.stringify(newBook),
             contentType: 'application/json'
           }).done(function(newBook) {
+            $('#noBooks').remove();
             $('#myCollection').append(
               '<div class="card horizontal">' +
                 '<div class="card-image">' +
@@ -399,7 +400,7 @@ $(document).ready(function() {
 
   socket.on('getMyBooksReply', function(books) {
     if (!books) {
-      $('#myCollection').html('<h5>You have no Books added yet.</h5>');
+      $('#myCollection').html('<h5 id="noBooks">You have no Books added yet.</h5>');
     } else {
       $('#myCollection').html('');
       books.forEach(function(book) {
