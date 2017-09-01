@@ -58,12 +58,14 @@ module.exports = (app, io) => {
   });
 
   app.delete('/api', isLoggedIn, (req, res) => {
-
-    const { bookId } = req.body;
     
-    Books.deleteOne({ _id: bookId }, err => {
+    const { bookId } = req.body;
+    Trades.remove({ bookId }, err => {
       if (err) throw err;
-      res.json({ success: 'successful delete', id: bookId });
+      Books.deleteOne({ _id: bookId }, err => {
+        if (err) throw err;
+        res.json({ success: 'successful delete', id: bookId });
+      });
     });
 
   });

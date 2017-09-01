@@ -34,7 +34,7 @@ module.exports = (app, io) => {
     });
     
     socket.on('refresh', () => {
-      socket.broadcast.emit('refreshReply');
+      io.emit('refreshReply');
     });
 
     socket.on('refreshPending', () => {
@@ -57,6 +57,28 @@ module.exports = (app, io) => {
           Trades.remove({ bookId }, err => {
             if (err) throw err;
             io.emit('tradeAcceptedReply');
+          });
+        });
+      });
+    });
+
+    socket.on('tradeRejected', id => {
+      Trades.findById(id, (err, doc) => {
+        if (err) throw err;
+        const bookId = doc.bookId;
+        Trades.deleteOne({ _id: id }, err => {
+          if (err) throw err;
+          Trades.find({ bookId }, (err, docs) => {
+            if (err) throw err;
+            if (!docs || docs.length === 0) {
+              let updatedDoc = {
+                tradeExists: false
+              };
+              Books.update({ _id: bookId }, updatedDoc, err => {
+                if (err) throw err;
+                io.emit('tradeRejectedReply');
+              });
+            }
           });
         });
       });

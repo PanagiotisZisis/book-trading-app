@@ -235,6 +235,7 @@ $(document).ready(function() {
 
   socket.on('refreshReply', function() {
     getAllBooks();
+    populatePendingTab();
   });
 
   // requesting a trade
@@ -362,9 +363,22 @@ $(document).ready(function() {
 
   populatePendingTab();
 
+  // accepting a trade
   $('#pending').on('click', '.acceptRequest', function() {
     var tradeId = $(this).data('id');
     socket.emit('tradeAccepted', tradeId);
+  });
+
+  // rejecting a trade
+  $('#pending').on('click', '.rejectRequest', function() {
+    var tradeId = $(this).data('id');
+    socket.emit('tradeRejected', tradeId);
+  });
+
+  // cancelling a trade request
+  $('#pending').on('click', '.cancelTrade', function() {
+    var tradeId = $(this).data('id');
+    socket.emit('tradeRejected', tradeId);
   });
 
   socket.on('refreshPendingReply', function() {
@@ -372,6 +386,12 @@ $(document).ready(function() {
   });
 
   socket.on('tradeAcceptedReply', function() {
+    getAllBooks();
+    populatePendingTab();
+    populateMyBooks();
+  });
+
+  socket.on('tradeRejectedReply', function() {
     getAllBooks();
     populatePendingTab();
     populateMyBooks();
